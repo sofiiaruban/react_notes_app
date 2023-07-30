@@ -1,6 +1,7 @@
 import { TableProps } from '../../types/TableProps'
+import Icons from '../Icons'
 
-const TableBody: React.FC<TableProps> = ({data}) => {
+const TableBody: React.FC<TableProps> = ({data,icons}) => {
   return (
     <tbody>
       {Array.isArray(data) ? (
@@ -9,6 +10,7 @@ const TableBody: React.FC<TableProps> = ({data}) => {
             {Object.values(note).map((value) => (
               <td>{value}</td>
             ))}
+            <Icons icons={icons} />
           </tr>
         ))
       ) : (

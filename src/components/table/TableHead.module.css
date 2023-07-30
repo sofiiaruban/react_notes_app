@@ -3,4 +3,9 @@
 } 
 .td {
   padding: 5px 15px;
+  font-weight: 600;
+  font-size: 18px;
+}
+.td::first-letter {
+  text-transform: capitalize;
 }

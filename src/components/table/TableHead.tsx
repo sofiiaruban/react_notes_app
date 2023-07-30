@@ -1,14 +1,11 @@
 import { TableProps } from '../../types/TableProps'
 import Icons from '../Icons'
 import styles from './TableHead.module.css'
-import editIcon from '../../assets/edit_icon.png'
-import archiveIcon from '../../assets/archive_icon.png'
-import trashCanIcon from '../../assets/trash-icon.png' 
 
 
-const TableHead: React.FC<TableProps> = ({data}) => {
+const TableHead: React.FC<TableProps> = ({data, icons}) => {
   const archivedNotesTableHeadNames = ['Category', 'Active', 'Archived']
-  const notesIcons = [editIcon, archiveIcon, trashCanIcon]
+  
 
   const getTableHeadNames = () => {
     let headNames
@@ -28,7 +25,7 @@ const TableHead: React.FC<TableProps> = ({data}) => {
         {tableHeadNames.map((name) => (
           <td className={styles.td}>{name}</td>
         ))}
-        {Array.isArray(data) ? <Icons icons={notesIcons} /> : null}
+        {Array.isArray(data) ? <Icons icons={icons} /> : null}
       </tr>
     </thead>
   )

@@ -1,4 +1,4 @@
 export interface IconsProps {
-  icons: string[]
+  icons?: string[]
   click?: () => {}
 }
