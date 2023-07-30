@@ -51,7 +51,10 @@ const initialArchivedNotes: Note[] = []
 
 export const noteSlice = createSlice({
   name: 'notes',
-  initialState: initialNotes,
+  initialState: {
+    notes: initialNotes,
+    archivedNotes: initialArchivedNotes,
+  },
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
       state.push(action.payload)
