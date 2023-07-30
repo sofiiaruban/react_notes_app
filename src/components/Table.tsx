@@ -1,23 +1,37 @@
 import { TableProps } from "../types/TableProps";
 
 const Table: React.FC<TableProps> = ({ data }) => {
-  
+  const archivedNotesTableHeadNames = ["Category", "Active", "Archived"]
   const getTableHeadNames = () => {
-    let tableHeadNames
+    let headNames
 
     if (Array.isArray(data)) {
-      tableHeadNames = Object.keys(data[0])
+      headNames = Object.keys(data[0])
     } else {
-      tableHeadNames = Object.keys(data)
+      headNames = archivedNotesTableHeadNames
     }
-    
-    return tableHeadNames
+
+    return headNames
   } 
+  let tableHeadNames = getTableHeadNames();
 
   return (
     <table>
-      <thead>{JSON.stringify(getTableHeadNames())}</thead>
-      <tbody></tbody>
+      <thead>
+        <tr>
+          {tableHeadNames.map((name) => (
+            <td>{name}</td>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {Array.isArray(data) &&
+          data.map((note, index) => (
+            <tr key={index}>
+              {Object.values(note).map((value) => (<td>{value}</td>))}
+            </tr>
+          ))}
+      </tbody>
     </table>
   )
 }
