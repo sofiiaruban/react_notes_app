@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAction } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { Note } from '../types/Note'
 import { Summary } from '../types/Summary'
@@ -59,49 +59,52 @@ export const noteSlice = createSlice({
     archivedNotes: initialArchivedNotes,
     summary: generateSummary(initialNotes, initialArchivedNotes)
   },
-  reducers: {
-    addNote: (state, action: PayloadAction<Note>) => {
-      state.notes.push(action.payload)
-      state.summary = generateSummary(state.notes, state.archivedNotes)
-    },
-    deleteNote: (state, action: PayloadAction<number>) => {
-      const index = action.payload
-      if (index >= 0 && index < state.notes.length) {
-        state.notes.splice(index, 1)
-        state.summary = generateSummary(state.notes, state.archivedNotes)
-      }
-      state.summary = generateSummary(state.notes, state.archivedNotes)
-    },
-    editNote: (
-      state,
-      action: PayloadAction<{ index: number; updatedNote: Note }>
-    ) => {
-      const { index, updatedNote } = action.payload
-      if (index >= 0 && index < state.notes.length) {
-        state.notes[index] = updatedNote
-        state.summary = generateSummary(state.notes, state.archivedNotes)
-      }
-    },
-    archiveNote: (state, action: PayloadAction<number>) => {
-      const index = action.payload
-      if (index >= 0 && index < state.notes.length) {
-        const archivedNote = state.notes.splice(index, 1)[0]
-        state.archivedNotes.push(archivedNote)
-        state.summary = generateSummary(state.notes, state.archivedNotes)
-      }
-    },
-    unarchiveNote: (state, action: PayloadAction<number>) => {
-      const index = action.payload
-      if (index >= 0 && index < state.archivedNotes.length) {
-        const unarchivedNote = state.archivedNotes.splice(index, 1)[0]
-        state.notes.push(unarchivedNote)
-        state.summary = generateSummary(state.notes, state.archivedNotes)
-      }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addNote, (state, action: PayloadAction<Note>) => {
+        state.notes.push(action.payload);
+        state.summary = generateSummary(state.notes, state.archivedNotes);
+      })
+      .addCase(deleteNote, (state, action: PayloadAction<number>) => {
+        const index = action.payload;
+        if (index >= 0 && index < state.notes.length) {
+          state.notes.splice(index, 1);
+          state.summary = generateSummary(state.notes, state.archivedNotes);
+        }
+      })
+      .addCase(editNote, (state, action: PayloadAction<{ index: number; updatedNote: Note }>) => {
+        const { index, updatedNote } = action.payload;
+        if (index >= 0 && index < state.notes.length) {
+          state.notes[index] = updatedNote;
+          state.summary = generateSummary(state.notes, state.archivedNotes);
+        }
+      })
+      .addCase(archiveNote, (state, action: PayloadAction<number>) => {
+        const index = action.payload;
+        if (index >= 0 && index < state.notes.length) {
+          const archivedNote = state.notes.splice(index, 1)[0];
+          state.archivedNotes.push(archivedNote);
+          state.summary = generateSummary(state.notes, state.archivedNotes);
+        }
+      })
+      .addCase(unarchiveNote, (state, action: PayloadAction<number>) => {
+        const index = action.payload;
+        if (index >= 0 && index < state.archivedNotes.length) {
+          const unarchivedNote = state.archivedNotes.splice(index, 1)[0];
+          state.notes.push(unarchivedNote);
+          state.summary = generateSummary(state.notes, state.archivedNotes);
+        }
+      });
     }
-  }
 })
-export const { addNote, deleteNote, editNote, archiveNote, unarchiveNote } =
-  noteSlice.actions
+export const addNote = createAction<Note>('notes/addNote')
+export const deleteNote = createAction<number>('notes/deleteNote')
+export const editNote = createAction<{ index: number; updatedNote: Note }>(
+  'notes/editNote'
+)
+export const archiveNote = createAction<number>('notes/archiveNote')
+export const unarchiveNote = createAction<number>('notes/unarchiveNote')
 export default noteSlice.reducer
 
 
