@@ -53,20 +53,43 @@ export const noteSlice = createSlice({
   name: 'notes',
   initialState: {
     notes: initialNotes,
-    archivedNotes: initialArchivedNotes,
+    archivedNotes: initialArchivedNotes
   },
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
-      state.push(action.payload)
+      state.notes.push(action.payload)
     },
     deleteNote: (state, action: PayloadAction<number>) => {
       const index = action.payload
-      if (index >= 0 && index < state.length) {
-        state.splice(index, 1)
+      if (index >= 0 && index < state.notes.length) {
+        state.notes.splice(index, 1)
+      }
+    },
+    editNote: (
+      state,
+      action: PayloadAction<{ index: number; updatedNote: Note }>
+    ) => {
+      const { index, updatedNote } = action.payload
+      if (index >= 0 && index < state.notes.length) {
+        state.notes[index] = updatedNote
+      }
+    },
+    archiveNote: (state, action: PayloadAction<number>) => {
+      const index = action.payload
+      if (index >= 0 && index < state.notes.length) {
+        const archivedNote = state.notes.splice(index, 1)[0]
+        state.archivedNotes.push(archivedNote)
+      }
+    },
+    unarchiveNote: (state, action: PayloadAction<number>) => {
+      const index = action.payload
+      if (index >= 0 && index < state.archivedNotes.length) {
+        const unarchivedNote = state.archivedNotes.splice(index, 1)[0]
+        state.notes.push(unarchivedNote)
       }
     }
   }
 })
-export const { addNote,deleteNote} = noteSlice.actions
-
+export const { addNote, deleteNote, editNote, archiveNote, unarchiveNote } =
+  noteSlice.actions
 export default noteSlice.reducer
