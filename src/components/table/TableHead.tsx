@@ -1,6 +1,6 @@
 import { TableProps } from '../../types/TableProps'
 import Icons from '../Icons'
-import styles from './TebleHead.module.css'
+import styles from './TableHead.module.css'
 import editIcon from '../../assets/edit_icon.png'
 import archiveIcon from '../../assets/archive_icon.png'
 import trashCanIcon from '../../assets/trash-icon.png' 
