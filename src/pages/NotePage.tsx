@@ -1,5 +1,4 @@
 
-
 const NotePage =()=> {
   return <div>Note</div>
 }

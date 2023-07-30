@@ -8,7 +8,7 @@ const Table: React.FC<TableProps> = ({ data, icons}) => {
   return (
     <table>
       <TableHead data={data} icons={icons} />
-      <TableBody data={data} icons={icons} />
+      {data.length !== 0 ? <TableBody data={data} icons={icons} /> : "This is not any notes"} 
     </table>
   )
 }
