@@ -47,6 +47,8 @@ const initialNotes:Note[] = [
     dates: ['7/26/2023']
   }
 ]
+const initialArchivedNotes: Note[] = []
+
 export const noteSlice = createSlice({
   name: 'notes',
   initialState: initialNotes,
