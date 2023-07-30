@@ -1,14 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from './store'
+import { Note } from '../types/note'
 
-interface Note {
-  name: string
-  created: string
-  category: string
-  content: string
-  dates: string[]
-}
+
 const initialNotes:Note[] = [
   {
     name: 'Shopping List',
@@ -53,3 +47,21 @@ const initialNotes:Note[] = [
     dates: ['7/26/2023']
   }
 ]
+export const noteSlice = createSlice({
+  name: 'notes',
+  initialState: initialNotes,
+  reducers: {
+    addNote: (state, action: PayloadAction<Note>) => {
+      state.push(action.payload)
+    },
+    deleteNote: (state, action: PayloadAction<number>) => {
+      const index = action.payload
+      if (index >= 0 && index < state.length) {
+        state.splice(index, 1)
+      }
+    }
+  }
+})
+export const { addNote,deleteNote} = noteSlice.actions
+
+export default noteSlice.reducer
