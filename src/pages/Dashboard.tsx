@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import Table from "../components/Table"
+import Table from "../components/table/Table"
 import { RootState } from "../redux/store"
 
 
