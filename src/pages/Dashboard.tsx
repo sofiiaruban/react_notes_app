@@ -23,15 +23,15 @@ const Dashboard = () => {
 
   return (
     <div>
-      {
-      isArchivedNotesTable ? (<>
-      <Table data={archivedNotes} icons={unarchivedIcons} />
-      <Button onClick={clickHandler} children="Back To Notes" /></>
-      ):(<><Table data={notes} icons={notesIcons} />
-      <Button onClick={clickHandler} children="Archived Notes" />
-      <Button onClick={clickHandler} children="Add new note" /></>)
+      {isArchivedNotesTable ? (<>
+        <Table data={archivedNotes} icons={unarchivedIcons} />
+        <Button onClick={clickHandler} children="Back To Notes" /></>
+        ):
+        (<><Table data={notes} icons={notesIcons} />
+        <Button onClick={clickHandler} children="Archived Notes" />
+        <Button onClick={clickHandler} children="Add new note" /></>)
       }
-      <Table data={summary} />
+        <Table data={summary} />
     </div>
   )
 }
