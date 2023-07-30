@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { Note } from '../types/note'
+import { Note } from '../types/Note'
 import { Summary } from '../types/Summary'
 
 
@@ -48,7 +48,9 @@ const initialNotes:Note[] = [
     dates: ['7/26/2023']
   }
 ]
-const initialArchivedNotes: Note[] = []
+const initialArchivedNotes: Note[] = [
+
+]
 
 export const noteSlice = createSlice({
   name: 'notes',
