@@ -3,7 +3,6 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import NotePage from './pages/NotePage'
 function App() {
-
   return (
     <>
       <HashRouter>

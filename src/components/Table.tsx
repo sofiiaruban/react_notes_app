@@ -1,6 +1,12 @@
-import { Note } from "../types/note";
+import { TableProps } from "../types/TableProps";
 
-const Table = (notesData: Note[])=> {
-  return <table>{JSON.stringify(notesData)}<thead></thead><tbody></tbody></table>
+const Table: React.FC<TableProps> = ({ data }) => {
+  return (
+    <table>
+      {JSON.stringify(data)}
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  )
 }
 export default Table;
