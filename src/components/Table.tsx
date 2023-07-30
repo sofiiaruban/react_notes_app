@@ -3,10 +3,9 @@ import { TableProps } from "../types/TableProps";
 
 const Table: React.FC<TableProps> = ({ data }) => {
   const archivedNotesTableHeadNames = ["Category", "Active", "Archived"]
-
   const getTableHeadNames = () => {
     let headNames
-
+    
     if (Array.isArray(data)) {
       headNames = Object.keys(data[0])
     } else {
