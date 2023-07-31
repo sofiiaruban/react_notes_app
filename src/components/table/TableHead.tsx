@@ -11,7 +11,10 @@ const TableHead: React.FC<TableProps> = ({data}) => {
   const getTableHeadNames = () => {
     let headNames
     if (Array.isArray(data)) {
-      headNames = Object.keys(data[0]|| notes[0])
+      headNames = Object.keys(data[0] || notes[0])
+        if (headNames.includes('id')) {
+          headNames = headNames.filter((name) => name !== 'id')
+        }
     } else {
       headNames = archivedNotesTableHeadNames
     }

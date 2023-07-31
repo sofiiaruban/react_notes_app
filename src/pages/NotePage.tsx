@@ -19,7 +19,7 @@ const NotePage: React.FC<NotePageProps> = ({editMode}) => {
      content: '',
      dates: [],
    })
-   const history = useNavigate()
+   const navigate = useNavigate()
      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
        const { name, value } = event.target
 
@@ -32,7 +32,7 @@ const NotePage: React.FC<NotePageProps> = ({editMode}) => {
     event.preventDefault()
     console.log(notes)
     dispatch(addNote(formData))
-    history('/')
+    navigate('/')
   }
 
   return (

@@ -18,12 +18,15 @@ const TableBody: React.FC<TableProps> = ({data, icons}) => {
       {Array.isArray(data) ? (
         data.map((note) => (
           <tr key={note.id}>
-            {Object.values(note).map((value) => (
-              <td key={uuidv4()}>{value}</td>
-            ))}
+            {Object.entries(note).map(([key, value]) => {
+              if (key !== 'id') {
+                return <td key={uuidv4()}>{value}</td>
+              }
+              return null
+            })}
             <Icons
               icons={icons}
-              click={ [
+              click={[
                 () => handleEditIconClick(note.id!),
                 () => handleArchiveIconClick(note.id!),
                 () => handleDeleteIconClick(note.id!)
