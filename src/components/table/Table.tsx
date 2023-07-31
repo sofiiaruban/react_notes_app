@@ -8,7 +8,7 @@ import styles from './Table.module.css'
 const Table: React.FC<TableProps> = ({ data, icons}) => {
   return (
     <table className={styles.table}>
-      <TableHead data={data} icons={icons} />
+      <TableHead data={data}/>
       {data.length !== 0 ? <TableBody data={data} icons={icons} /> : "This is not any notes"} 
     </table>
   )

@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from 'react-redux'
 import { addNote } from '../redux/noteSlice'
 import { Note } from '../types/Note'
@@ -8,8 +7,9 @@ import style from './NotePage.module.css'
 import closeIcon from '../assets/close_icon.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../redux/store'
+import { NotePageProps } from '../types/NotePageProps'
 
-const NotePage: React.FC = () => {
+const NotePage: React.FC<NotePageProps> = ({editMode}) => {
    const notes = useSelector((state: RootState) => state.notes.notes)
    const dispatch = useDispatch()
    const [formData, setFormData] = useState<Note>({
@@ -107,7 +107,7 @@ const NotePage: React.FC = () => {
       <Link to="/">
         <img className={style.closeIcon} src={closeIcon} alt="close" />
       </Link>
-        <Button children="Add Note"></Button>
+        <Button children={editMode? "Update Note": "Add Note"}/>
     </form>
   )
 }

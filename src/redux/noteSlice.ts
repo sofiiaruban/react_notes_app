@@ -2,10 +2,12 @@ import { createSlice, createAction } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { Note } from '../types/Note'
 import { Summary } from '../types/Summary'
+import { v4 as uuidv4 } from 'uuid'
 
 
-const initialNotes:Note[] = [
+const initialNotes: Note[] = [
   {
+    id: uuidv4(),
     name: 'Shopping List',
     created: '7/26/2023',
     category: 'Task',
@@ -13,6 +15,7 @@ const initialNotes:Note[] = [
     dates: ['7/26/2023']
   },
   {
+    id: uuidv4(),
     name: 'Thought',
     created: '7/26/2023',
     category: 'Random Thought',
@@ -20,6 +23,7 @@ const initialNotes:Note[] = [
     dates: ['7/26/2023']
   },
   {
+    id: uuidv4(),
     name: 'Bagfix',
     created: '7/26/2023',
     category: 'Idea',
@@ -27,6 +31,7 @@ const initialNotes:Note[] = [
     dates: ['7/26/2023', '7/28/2023']
   },
   {
+    id: uuidv4(),
     name: 'Shopping List',
     created: '7/26/2023',
     category: 'Task',
@@ -34,13 +39,14 @@ const initialNotes:Note[] = [
     dates: ['7/29/2023']
   },
   {
+    id: uuidv4(),
     name: 'Ornare Lectus',
     created: '7/26/2023',
     category: 'Random Thought',
     content: 'pellentesque massa placerat duis',
     dates: ['7/26/2023']
   },
-  {
+  {id: uuidv4(),
     name: 'Rhoncus Mattis',
     created: '7/26/2023',
     category: 'Idea',
@@ -57,46 +63,58 @@ export const noteSlice = createSlice({
   initialState: {
     notes: initialNotes,
     archivedNotes: initialArchivedNotes,
-    summary: generateSummary(initialNotes, initialArchivedNotes)
+    summary: generateSummary(initialNotes, initialArchivedNotes),
+    isEditMode: false
   },
-  reducers: {},
+  reducers: {
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addNote, (state, action: PayloadAction<Note>) => {
-        state.notes.push(action.payload);
-        state.summary = generateSummary(state.notes, state.archivedNotes);
+        const newNote = {
+          ...action.payload,
+          id: uuidv4()
+        }
+        state.notes.push(newNote)
+        state.summary = generateSummary(state.notes, state.archivedNotes)
       })
       .addCase(deleteNote, (state, action: PayloadAction<number>) => {
-        const index = action.payload;
+        const index = action.payload
         if (index >= 0 && index < state.notes.length) {
-          state.notes.splice(index, 1);
-          state.summary = generateSummary(state.notes, state.archivedNotes);
+          state.notes.splice(index, 1)
+          state.summary = generateSummary(state.notes, state.archivedNotes)
         }
       })
-      .addCase(editNote, (state, action: PayloadAction<{ index: number; updatedNote: Note }>) => {
-        const { index, updatedNote } = action.payload;
-        if (index >= 0 && index < state.notes.length) {
-          state.notes[index] = updatedNote;
-          state.summary = generateSummary(state.notes, state.archivedNotes);
+      .addCase(
+        editNote,
+        (
+          state,
+          action: PayloadAction<{ index: number; updatedNote: Note }>
+        ) => {
+          const { index, updatedNote } = action.payload
+          if (index >= 0 && index < state.notes.length) {
+            state.notes[index] = updatedNote
+            state.summary = generateSummary(state.notes, state.archivedNotes)
+          }
         }
-      })
+      )
       .addCase(archiveNote, (state, action: PayloadAction<number>) => {
-        const index = action.payload;
+        const index = action.payload
         if (index >= 0 && index < state.notes.length) {
-          const archivedNote = state.notes.splice(index, 1)[0];
-          state.archivedNotes.push(archivedNote);
-          state.summary = generateSummary(state.notes, state.archivedNotes);
+          const archivedNote = state.notes.splice(index, 1)[0]
+          state.archivedNotes.push(archivedNote)
+          state.summary = generateSummary(state.notes, state.archivedNotes)
         }
       })
       .addCase(unarchiveNote, (state, action: PayloadAction<number>) => {
-        const index = action.payload;
+        const index = action.payload
         if (index >= 0 && index < state.archivedNotes.length) {
-          const unarchivedNote = state.archivedNotes.splice(index, 1)[0];
-          state.notes.push(unarchivedNote);
-          state.summary = generateSummary(state.notes, state.archivedNotes);
+          const unarchivedNote = state.archivedNotes.splice(index, 1)[0]
+          state.notes.push(unarchivedNote)
+          state.summary = generateSummary(state.notes, state.archivedNotes)
         }
-      });
-    }
+      })
+  }
 })
 export const addNote = createAction<Note>('notes/addNote')
 export const deleteNote = createAction<number>('notes/deleteNote')

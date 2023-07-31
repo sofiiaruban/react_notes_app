@@ -9,7 +9,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/note" element={<NotePage />} />
-          <Route path="/note/:id"></Route>
+          <Route
+            path="/note/:id"
+            element={<NotePage editMode={true} />}
+          ></Route>
         </Routes>
       </HashRouter>
     </>
