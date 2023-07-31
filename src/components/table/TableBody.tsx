@@ -3,7 +3,7 @@ import Icons from '../Icons'
 import { v4 as uuidv4 } from 'uuid'
 import {useNavigate } from 'react-router-dom'
 
-const TableBody: React.FC<TableProps> = ({data, icons}) => {
+const TableBody: React.FC<TableProps> = ({data, icons, archived}) => {
   const navigate=useNavigate();
 
   const handleEditIconClick = (noteId: string) => {
@@ -16,7 +16,9 @@ const TableBody: React.FC<TableProps> = ({data, icons}) => {
   const handleDeleteIconClick = (noteId: string) => {
     console.log("Clicked on Delete icon in row with note ID:", noteId);
   }
-
+  const handleUnarchivedIconClick = (noteId: string) => {
+    console.log("Clicked on Unchive icon in row with note ID:", noteId);
+  }
   return (
     <tbody>
       {Array.isArray(data) ? (
@@ -30,11 +32,15 @@ const TableBody: React.FC<TableProps> = ({data, icons}) => {
             })}
             <Icons
               icons={icons}
-              click={[
-                () => handleEditIconClick(note.id!),
-                () => handleArchiveIconClick(note.id!),
-                () => handleDeleteIconClick(note.id!)
-              ]}
+              click={
+                archived
+                  ? [()=>handleUnarchivedIconClick(note.id!)]
+                  : [
+                      () => handleEditIconClick(note.id!),
+                      () => handleArchiveIconClick(note.id!),
+                      () => handleDeleteIconClick(note.id!)
+                    ]
+              }
             />
           </tr>
         ))

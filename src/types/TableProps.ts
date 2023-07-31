@@ -4,4 +4,5 @@ import { Note } from "./Note";
 export interface TableProps {
   data: Note[] | Summary
   icons?: string[]
+  archived?: boolean
 }

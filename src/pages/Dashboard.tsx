@@ -26,7 +26,11 @@ const Dashboard = () => {
     <div>
       {isArchivedNotesTable ? (
         <>
-          <Table data={archivedNotes} icons={unarchivedIcons} />
+          <Table
+            data={archivedNotes}
+            icons={unarchivedIcons}
+            archived={isArchivedNotesTable}
+          />
           <Button onClick={clickHandler} children="Back To Notes" />
         </>
       ) : (
