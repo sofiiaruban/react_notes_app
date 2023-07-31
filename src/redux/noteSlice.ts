@@ -87,13 +87,16 @@ export const noteSlice = createSlice({
       })
       .addCase(
         editNote,
-        (
-          state,
-          action: PayloadAction<{ index: number; updatedNote: Note }>
-        ) => {
-          const { index, updatedNote } = action.payload
-          if (index >= 0 && index < state.notes.length) {
-            state.notes[index] = updatedNote
+        (state, action: PayloadAction<{ id: string; updatedNote: Note }>) => {
+          const { id, updatedNote } = action.payload
+          const existingNoteIndex = state.notes.findIndex(
+            (note) => note.id === id
+          )
+          if (existingNoteIndex !== -1) {
+            state.notes[existingNoteIndex] = {
+              ...state.notes[existingNoteIndex],
+              ...updatedNote
+            }
             state.summary = generateSummary(state.notes, state.archivedNotes)
           }
         }
@@ -118,7 +121,7 @@ export const noteSlice = createSlice({
 })
 export const addNote = createAction<Note>('notes/addNote')
 export const deleteNote = createAction<number>('notes/deleteNote')
-export const editNote = createAction<{ index: number; updatedNote: Note }>(
+export const editNote = createAction<{ id: string; updatedNote: Note }>(
   'notes/editNote'
 )
 export const archiveNote = createAction<number>('notes/archiveNote')

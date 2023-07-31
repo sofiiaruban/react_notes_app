@@ -1,37 +1,57 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { addNote } from '../redux/noteSlice'
+import { addNote, editNote } from '../redux/noteSlice'
 import { Note } from '../types/Note'
-import {  useState } from 'react'
+import {  useEffect, useState } from 'react'
 import Button from '../components/Button'
 import style from './NotePage.module.css'
 import closeIcon from '../assets/close_icon.png'
-import { Link, useNavigate } from 'react-router-dom'
-import { RootState } from '../redux/store'
+import { Link, useNavigate, useParams} from 'react-router-dom'
 import { NotePageProps } from '../types/NotePageProps'
+import { RootState } from '../redux/store'
+
+const findNoteById = (notes: Note[], noteId: string) => {
+  const foundNote = notes.find((note) => note.id === noteId)
+  return foundNote || null
+}
 
 const NotePage: React.FC<NotePageProps> = ({editMode}) => {
-   const notes = useSelector((state: RootState) => state.notes.notes)
-   const dispatch = useDispatch()
-   const [formData, setFormData] = useState<Note>({
+  const dispatch = useDispatch()
+  const [formData, setFormData] = useState<Note>({
      name: '',
      created: '',
      category: '',
      content: '',
      dates: [],
    })
-   const navigate = useNavigate()
-     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-       const { name, value } = event.target
+  const navigate = useNavigate()
+  const {id} = useParams()
+  const notes = useSelector((state: RootState) => state.notes.notes)
 
-       setFormData((prevState) => ({
-         ...prevState,
-         [name]: value
-       }))
-     }
+  useEffect(() => {
+    if (editMode && id) {
+      const note = findNoteById(notes,id)
+      if (note) {
+        setFormData(note)
+      }
+    }
+  }, [editMode, id])
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value
+      }))
+  }
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    console.log(notes)
-    dispatch(addNote(formData))
+
+    if (editMode && id) {
+      dispatch(editNote({ id, updatedNote: formData }))
+    } else {
+      dispatch(addNote(formData))
+    }
     navigate('/')
   }
 
