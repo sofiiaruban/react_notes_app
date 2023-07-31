@@ -25,7 +25,9 @@ const TableHead: React.FC<TableProps> = ({data, icons}) => {
     <thead className={styles.thead}>
       <tr>
         {tableHeadNames.map((name) => (
-          <td className={styles.td}>{name}</td>
+          <td key={name} className={styles.td}>
+            {name}
+          </td>
         ))}
         {Array.isArray(data) ? <Icons icons={icons} /> : null}
       </tr>

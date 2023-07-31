@@ -7,6 +7,7 @@ import trashCanIcon from '../assets/trash-icon.png'
 import unarchivedIcon from '../assets/unarchive_icon.png'
 import Button from "../components/Button"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const Dashboard = () => {
   const notes = useSelector((state: RootState) => state.notes.notes)
@@ -23,15 +24,21 @@ const Dashboard = () => {
 
   return (
     <div>
-      {isArchivedNotesTable ? (<>
-        <Table data={archivedNotes} icons={unarchivedIcons} />
-        <Button onClick={clickHandler} children="Back To Notes" /></>
-        ):
-        (<><Table data={notes} icons={notesIcons} />
-        <Button onClick={clickHandler} children="Archived Notes" />
-        <Button onClick={clickHandler} children="Add new note" /></>)
-      }
-        <Table data={summary} />
+      {isArchivedNotesTable ? (
+        <>
+          <Table data={archivedNotes} icons={unarchivedIcons} />
+          <Button onClick={clickHandler} children="Back To Notes" />
+        </>
+      ) : (
+        <>
+          <Table data={notes} icons={notesIcons} />
+          <Button onClick={clickHandler} children="Archived Notes" />
+          <Link to="/note">
+            <Button children="Add new note" />
+          </Link>
+        </>
+      )}
+      <Table data={summary} />
     </div>
   )
 }

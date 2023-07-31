@@ -1,0 +1,38 @@
+.table {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 35px 35px 15px 35px;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: relative;
+}
+.table input {
+  width: 96%;
+  margin-bottom: 15px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.inputRadio {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.inputRadioRow {
+   display: flex;
+}
+.inputRadioRow input{
+   flex-basis: 10%;
+}
+.closeIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  right: 8px;
+}
+.table button {
+  width: 100%;
+}

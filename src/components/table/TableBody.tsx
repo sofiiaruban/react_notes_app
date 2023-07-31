@@ -1,14 +1,15 @@
 import { TableProps } from '../../types/TableProps'
 import Icons from '../Icons'
+import { v4 as uuidv4 } from 'uuid'
 
 const TableBody: React.FC<TableProps> = ({data,icons}) => {
   return (
     <tbody>
       {Array.isArray(data) ? (
-        data.map((note, index) => (
-          <tr key={index}>
+        data.map((note) => (
+          <tr key={uuidv4()}>
             {Object.values(note).map((value) => (
-              <td>{value}</td>
+              <td key={uuidv4()}>{value}</td>
             ))}
             <Icons icons={icons} />
           </tr>
@@ -16,7 +17,7 @@ const TableBody: React.FC<TableProps> = ({data,icons}) => {
       ) : (
         <>
           {Object.entries(data).map(([key, value]) => (
-            <tr key={key}>
+            <tr key={uuidv4()}>
               <td>{key}</td>
               <td>{value[0]}</td>
               <td>{value[1]}</td>
