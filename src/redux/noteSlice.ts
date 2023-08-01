@@ -78,11 +78,13 @@ export const noteSlice = createSlice({
         state.notes.push(newNote)
         state.summary = generateSummary(state.notes, state.archivedNotes)
       })
-      .addCase(deleteNote, (state, action: PayloadAction<number>) => {
-        const index = action.payload
-        if (index >= 0 && index < state.notes.length) {
-          state.notes.splice(index, 1)
-          state.summary = generateSummary(state.notes, state.archivedNotes)
+      .addCase(deleteNote, (state, action: PayloadAction<string>) => {
+        const noteId = action.payload;
+      const existingNoteIndex = state.notes.findIndex((note) => note.id === noteId);
+      
+      if (existingNoteIndex !== -1) {
+        state.notes.splice(existingNoteIndex, 1);
+        state.summary = generateSummary(state.notes, state.archivedNotes);
         }
       })
       .addCase(
@@ -101,18 +103,28 @@ export const noteSlice = createSlice({
           }
         }
       )
-      .addCase(archiveNote, (state, action: PayloadAction<number>) => {
-        const index = action.payload
-        if (index >= 0 && index < state.notes.length) {
-          const archivedNote = state.notes.splice(index, 1)[0]
-          state.archivedNotes.push(archivedNote)
-          state.summary = generateSummary(state.notes, state.archivedNotes)
-        }
+      .addCase(archiveNote, (state, action: PayloadAction<string>) => {
+        const noteId = action.payload
+         const existingNoteIndex = state.notes.findIndex(
+           (note) => note.id === noteId
+         )
+         if (existingNoteIndex !== -1) {
+           const archivedNote = state.notes.splice(existingNoteIndex, 1)[0]
+           state.archivedNotes.push(archivedNote)
+           state.summary = generateSummary(state.notes, state.archivedNotes)
+         }
       })
-      .addCase(unarchiveNote, (state, action: PayloadAction<number>) => {
-        const index = action.payload
-        if (index >= 0 && index < state.archivedNotes.length) {
-          const unarchivedNote = state.archivedNotes.splice(index, 1)[0]
+      .addCase(unarchiveNote, (state, action: PayloadAction<string>) => {
+        const noteId = action.payload
+        const existingNoteIndex = state.archivedNotes.findIndex(
+          (note) => note.id === noteId
+        )
+
+        if (existingNoteIndex !== -1) {
+          const unarchivedNote = state.archivedNotes.splice(
+            existingNoteIndex,
+            1
+          )[0]
           state.notes.push(unarchivedNote)
           state.summary = generateSummary(state.notes, state.archivedNotes)
         }
@@ -120,12 +132,12 @@ export const noteSlice = createSlice({
   }
 })
 export const addNote = createAction<Note>('notes/addNote')
-export const deleteNote = createAction<number>('notes/deleteNote')
+export const deleteNote = createAction<string>('notes/deleteNote')
 export const editNote = createAction<{ id: string; updatedNote: Note }>(
   'notes/editNote'
 )
-export const archiveNote = createAction<number>('notes/archiveNote')
-export const unarchiveNote = createAction<number>('notes/unarchiveNote')
+export const archiveNote = createAction<string>('notes/archiveNote')
+export const unarchiveNote = createAction<string>('notes/unarchiveNote')
 export default noteSlice.reducer
 
 

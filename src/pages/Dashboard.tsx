@@ -23,7 +23,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <>
       {isArchivedNotesTable ? (
         <>
           <Table
@@ -36,14 +36,14 @@ const Dashboard = () => {
       ) : (
         <>
           <Table data={notes} icons={notesIcons} />
-          <Button onClick={clickHandler} children="Archived Notes" />
+          <Button onClick={clickHandler} children="Archived note" />
           <Link to="/note">
             <Button children="Add new note" />
           </Link>
         </>
       )}
       <Table data={summary} />
-    </div>
+    </>
   )
 }
 export default Dashboard

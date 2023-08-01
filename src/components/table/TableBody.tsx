@@ -2,22 +2,24 @@ import { TableProps } from '../../types/TableProps'
 import Icons from '../Icons'
 import { v4 as uuidv4 } from 'uuid'
 import {useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { archiveNote, deleteNote, unarchiveNote } from '../../redux/noteSlice'
 
 const TableBody: React.FC<TableProps> = ({data, icons, archived}) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate()
+   const dispatch = useDispatch()
 
   const handleEditIconClick = (noteId: string) => {
-    console.log("Clicked on Edit icon in row with note ID:", noteId);
     navigate(`/note/${noteId}`)
   }
   const handleArchiveIconClick = (noteId: string) => {
-    console.log("Clicked on Archive icon in row with note ID:", noteId);
+    dispatch(archiveNote(noteId))
   }
   const handleDeleteIconClick = (noteId: string) => {
-    console.log("Clicked on Delete icon in row with note ID:", noteId);
+    dispatch(deleteNote(noteId))
   }
   const handleUnarchivedIconClick = (noteId: string) => {
-    console.log("Clicked on Unchive icon in row with note ID:", noteId);
+    dispatch(unarchiveNote(noteId))
   }
   return (
     <tbody>
