@@ -7,7 +7,7 @@ import { archiveNote, deleteNote, unarchiveNote } from '../../redux/noteSlice'
 
 const TableBody: React.FC<TableProps> = ({data, icons, archived}) => {
   const navigate = useNavigate()
-   const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const handleEditIconClick = (noteId: string) => {
     navigate(`/note/${noteId}`)
