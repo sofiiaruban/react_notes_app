@@ -38,10 +38,20 @@ const NotePage: React.FC<NotePageProps> = ({editMode}) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value
-      }))
+
+    if (name === "dates") {
+       const datesArray = value.split(',').map((date) => date.trim())
+       setFormData((prevState) => ({
+         ...prevState,
+         [name]: datesArray
+       }))
+    } else {
+       setFormData((prevState) => ({
+         ...prevState,
+         [name]: value
+       }))
+    }
+    
   }
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -122,12 +132,12 @@ const NotePage: React.FC<NotePageProps> = ({editMode}) => {
         name="dates"
         placeholder="Enter dates"
         required={true}
-        value={formData.dates || []}
+        value={formData.dates.join(", ")|| []}
       />
       <Link to="/">
         <img className={style.closeIcon} src={closeIcon} alt="close" />
       </Link>
-        <Button children={editMode? "Update Note": "Add Note"}/>
+      <Button children={editMode ? 'Update Note' : 'Add Note'} />
     </form>
   )
 }

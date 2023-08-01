@@ -46,17 +46,24 @@ const initialNotes: Note[] = [
     content: 'pellentesque massa placerat duis',
     dates: ['7/26/2023']
   },
-  {id: uuidv4(),
+  {
+    id: uuidv4(),
     name: 'Rhoncus Mattis',
     created: '7/26/2023',
     category: 'Idea',
     content: 'magna etiam tempor orci',
     dates: ['7/26/2023']
+  },
+  {
+    id: uuidv4(),
+    name: 'Nullam Non Nisi',
+    created: '8/1/2023',
+    category: 'Idea',
+    content: 'magna etiam tempor orc',
+    dates: ['8/10/2023']
   }
 ]
-const initialArchivedNotes: Note[] = [
-
-]
+const initialArchivedNotes: Note[] = []
 
 export const noteSlice = createSlice({
   name: 'notes',
@@ -81,7 +88,7 @@ export const noteSlice = createSlice({
       .addCase(deleteNote, (state, action: PayloadAction<string>) => {
         const noteId = action.payload;
       const existingNoteIndex = state.notes.findIndex((note) => note.id === noteId);
-      
+
       if (existingNoteIndex !== -1) {
         state.notes.splice(existingNoteIndex, 1);
         state.summary = generateSummary(state.notes, state.archivedNotes);

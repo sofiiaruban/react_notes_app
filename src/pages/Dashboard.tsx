@@ -9,17 +9,19 @@ import Button from "../components/Button"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const notes = useSelector((state: RootState) => state.notes.notes)
-  const archivedNotes = useSelector((state: RootState) => state.notes.archivedNotes)
+  const archivedNotes = useSelector(
+    (state: RootState) => state.notes.archivedNotes
+  )
   const summary = useSelector((state: RootState) => state.notes.summary)
   const notesIcons = [editIcon, archiveIcon, trashCanIcon]
-  const unarchivedIcons =[unarchivedIcon]
-  const [isArchivedNotesTable, setIsArchivedNotesTable] = useState<boolean>(false)
-  
+  const unarchivedIcons = [unarchivedIcon]
+  const [isArchivedNotesTable, setIsArchivedNotesTable] =
+    useState<boolean>(false)
 
-  const clickHandler = ()=> {
-    setIsArchivedNotesTable(!isArchivedNotesTable);
+  const clickHandler =() => {
+    setIsArchivedNotesTable(!isArchivedNotesTable)
   }
 
   return (

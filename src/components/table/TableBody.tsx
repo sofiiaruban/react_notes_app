@@ -21,16 +21,19 @@ const TableBody: React.FC<TableProps> = ({data, icons, archived}) => {
   const handleUnarchivedIconClick = (noteId: string) => {
     dispatch(unarchiveNote(noteId))
   }
+
   return (
     <tbody>
       {Array.isArray(data) ? (
         data.map((note) => (
           <tr key={note.id}>
             {Object.entries(note).map(([key, value]) => {
-              if (key !== 'id') {
-                return <td key={uuidv4()}>{value}</td>
-              }
-              return null
+              if (key === 'id') return null
+                return (
+                  <td key={uuidv4()}>
+                    {key === 'dates' ? value.join(', ') : value}
+                  </td>
+                )
             })}
             <Icons
               icons={icons}
